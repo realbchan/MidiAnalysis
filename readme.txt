@@ -28,3 +28,5 @@ need to
 
 7. A way in which you can detect patterns. Perhaps then, you can display sequence of patterns. As in, suppose
 there is a piece of music if pattern ABBA. I want a way to detect this pattern, then print it.
+
+8. midi file -> sheet music? This would be a lot of work, and i'd have to think about it
