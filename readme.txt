@@ -13,11 +13,18 @@ is the best?
 3. Similarly, given a collection of midi files of the same piece, can you average them out to create
 a single midi file that represents the average of them?
 
-4. Over the top idea: imagine a neural net that can accurately classify whether a midi file is a song or not. Then you have another neural net that tries to "trick" the other, by generating a midi file with sounds, and trying to test whether the other NN can tell if its a song or not.
+4. Over the top idea: imagine a neural net that can accurately classify whether a midi file is a song or not.
+Then you have another neural net that tries to "trick" the other, by generating a midi file with sounds, and
+trying to test whether the other NN can tell if its a song or not -> an AI that can self produce music
 
 -exceptions to this: one is considered a valid song? What features would you extract for training?
 
-5. Perhaps you can analyze where the hardest parts are in a song? perhaps like where the largest intervals are, where the notes are played in quick succession.
+5. Perhaps you can analyze where the hardest parts are in a song? perhaps like where the largest intervals are,
+where the notes are played in quick succession.
 -but then, what is considered "hard?"
 
-6. a way in which you can take a midi file and smooth it, to have notes and chords released precisely when they need to
+6. a way in which you can take a midi file and smooth it, to have notes and chords released precisely when they
+need to
+
+7. A way in which you can detect patterns. Perhaps then, you can display sequence of patterns. As in, suppose
+there is a piece of music if pattern ABBA. I want a way to detect this pattern, then print it.
