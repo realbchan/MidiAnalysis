@@ -110,20 +110,27 @@ class Song:
 		if len(self.tones) == 0:
 			self.tones.append(note)
 		else:
-			last_tone = self.tones[len(self.tones) - 1]
+			# last_tone = self.tones[len(self.tones) - 1]
+			# print(self.tones[-10:])
+			last_ten_tones = self.tones[-10:]
+			found_neighbor = False
+			for previous_tone in last_ten_tones:
 
-			if last_tone.is_close(note):
-				if last_tone.is_note():
-					chord = Chord()
-					chord.add_note(last_tone)
-					chord.add_note(note)
-					self.tones.pop()
-					self.tones.append(chord)
-				else:
-					last_tone.add_note(note)
-			else:
+				if previous_tone.is_close(note):
+					found_neighbor = True
+
+					if previous_tone.is_note():
+						chord = Chord()
+						chord.add_note(previous_tone)
+						chord.add_note(note)
+						self.tones.pop()
+						self.tones.append(chord)
+					else:
+						previous_tone.add_note(note)
+					break
+			if not found_neighbor:
 				self.tones.append(note)
-		
+
 
 
 
