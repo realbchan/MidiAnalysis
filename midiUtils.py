@@ -22,9 +22,9 @@ class Tone:
 	def __init__(self):
 		self.threshold_limit = .25
 
-	def is_Note(self):
+	def is_note(self):
 		return False
-	def is_Chord(self):
+	def is_chord(self):
 		return False
 	def is_close(self, other_note):
 		raise NotImplementedError("To be implemented")
@@ -48,7 +48,7 @@ class Note(Tone):
 		stop_difference = abs(self.absoluteStop - other_note.absoluteStop)
 		
 
-		if start_difference <= threshold_limit and stop_difference <= threshold_limit:
+		if start_difference <= self.threshold_limit and stop_difference <= self.threshold_limit:
 			return True
 		return False
 
@@ -86,6 +86,44 @@ class Chord(Tone):
 		stop_difference = abs(self.average_stop_time - other_note.absoluteStop)
 		
 
-		if start_difference <= threshold_limit and stop_difference <= threshold_limit:
+		if start_difference <= self.threshold_limit and stop_difference <= self.threshold_limit:
 			return True
 		return False
+
+class Song:
+	def __init__(self):
+		self.tones = list()
+
+	
+
+	def sort_by_start_of_tone(self):
+
+		def get_start(tone):
+			if tone.is_note():
+				return tone.absoluteStart
+			else:
+				return tone.average_start_time
+
+		self.tones.sort(key=get_start)
+
+	def add_note(self, note):
+		if len(self.tones) == 0:
+			self.tones.append(note)
+		else:
+			last_tone = self.tones[len(self.tones) - 1]
+
+			if last_tone.is_close(note):
+				if last_tone.is_note():
+					chord = Chord()
+					chord.add_note(last_tone)
+					chord.add_note(note)
+					self.tones.pop()
+					self.tones.append(chord)
+				else:
+					last_tone.add_note(note)
+			else:
+				self.tones.append(note)
+		
+
+
+
