@@ -30,3 +30,12 @@ need to
 there is a piece of music if pattern ABBA. I want a way to detect this pattern, then print it.
 
 8. midi file -> sheet music? This would be a lot of work, and i'd have to think about it
+
+9. Take the frequency of notes played -> Denalex Orakwue's idea
+
+Things to do:
+need to make a main entry point with arguments->
+arguments are based on which analysis you want to perform->
+based on choice, execute the analysis
+
+Known Errors -> chord detecting can get messed up to overlapping notes, will fix
