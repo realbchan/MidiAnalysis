@@ -150,7 +150,9 @@ class Song:
 					# current note's end is close to previous end, check if both start
 					# and end are close
 					if previous_tone.is_close(note):
-
+						# in the event that we need to make a new chord,
+						# we need to save the index of the previous_tone,
+						#create a chord, and insert it back to original position
 						if previous_tone.is_note():
 							chord = Chord()
 							chord.add_note(previous_tone)

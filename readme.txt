@@ -31,11 +31,16 @@ there is a piece of music if pattern ABBA. I want a way to detect this pattern, 
 
 8. midi file -> sheet music? This would be a lot of work, and i'd have to think about it
 
-9. Take the frequency of notes played -> Denalex Orakwue's idea
+9. Take the frequency of notes played -> Denalex Orakwue's idea -> use matplotlib for visualization
 
 Things to do:
-need to make a main entry point with arguments->
-arguments are based on which analysis you want to perform->
-based on choice, execute the analysis
+1. need to make a main entry point with arguments->
+   arguments are based on which analysis you want to perform->
+   based on choice, execute the analysis
+2. Maybe make an iterator for chords and song
+3. Put this in a docker container, make a dockerfile
+4. Make a requirements.txt
+5. Build unit tests(or anything that just tests functionality/integrity)
+6. 
 
 Known Errors -> chord detecting can get messed up to overlapping notes, will fix
