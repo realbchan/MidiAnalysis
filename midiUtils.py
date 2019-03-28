@@ -49,6 +49,9 @@ class Note(Tone):
 		self.velocityStart = velocityStart
 		self.velocityStop = velocityStop
 
+	def __str__(self):
+		return self.notePlayed
+
 	def is_note(self):
 		return True
 	# uses self.threshold to determine if a note is close
@@ -71,6 +74,11 @@ class Chord(Tone):
 		self.average_start_time = 0
 		self.average_stop_time = 0
 
+	def __str__(self):
+		chord = ''
+		for note in self.notes_in_chord:
+			chord += note.notePlayed
+		return chord
 
 	def is_chord(self):
 		return True
@@ -106,6 +114,11 @@ class Chord(Tone):
 class Song:
 	def __init__(self):
 		self.tones = list()
+
+	def __str__(self):
+
+		return ''.join(str(tone) for tone in self.tones)
+
 	# sorts tones by start
 	def sort_by_start_of_tone(self):
 		# sorting comparator, probably could refactor
@@ -118,31 +131,41 @@ class Song:
 		self.tones.sort(key=get_start)
 	# add note to song, will detect if needs to make a chord
 	def add_note(self, note):
+		
 		if len(self.tones) == 0:
 			self.tones.append(note)
+
 		else:
-			last_tone = self.tones[len(self.tones) - 1]
-			# print(self.tones[-10:])
-			# last_ten_tones = self.tones[-10:]
-			# found_neighbor = False
-			# for previous_tone in last_ten_tones:
-
-			if last_tone.is_close(note):
-				# found_neighbor = True
-
-				if last_tone.is_note():
-					chord = Chord()
-					chord.add_note(last_tone)
-					chord.add_note(note)
-					self.tones.pop()
-					self.tones.append(chord)
+			for previous_tone in self.tones[::-1]:
+				# retrieve previous tone's end, chord or note
+				previous_tone_end = None
+				if previous_tone.is_chord():
+					previous_tone_end = previous_tone.average_stop_time
 				else:
-					last_tone.add_note(note)
-			# 		# break
-			# if not found_neighbor:
-			else:
-				self.tones.append(note)
+					previous_tone_end = previous_tone.absoluteStop
 
+				# check if the previous' end time is close to current note
+				# if it's not in threshold, this is just a singular note
+				if abs(previous_tone_end - note.absoluteStop) <= note.threshold_limit:
+					# current note's end is close to previous end, check if both start
+					# and end are close
+					if previous_tone.is_close(note):
+
+						if previous_tone.is_note():
+							chord = Chord()
+							chord.add_note(previous_tone)
+							chord.add_note(note)
+							saveIndex = self.tones.index(previous_tone)
+							self.tones.pop(saveIndex)
+							self.tones.insert(saveIndex, chord)
+							break
+						else:
+							previous_tone.add_note(note)
+							break
+					continue
+				else:
+					self.tones.append(note)
+					break
 
 
 
