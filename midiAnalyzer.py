@@ -1,6 +1,7 @@
 from mido import MidiFile
 from mido.midifiles.units import tempo2bpm, bpm2tempo, tick2second, second2tick
 from midiUtils import Utils, Tone, Note, Chord, Song
+from toneFrequency import ToneFrequency
 
 
 util = Utils()
@@ -31,10 +32,12 @@ for i, track in enumerate(mid.tracks):
     			# print(song)
     		else:
     			currently_played_notes[message_note] = (cumulative_time, msg.velocity)
-    print(len(song.tones))
+    # print(len(song.tones))
     # song.sort_by_start_of_tone()
     for tone in song.tones:
     	print(tone)
+    frequencies = ToneFrequency(song)
+    print(frequencies.frequency_of_all_notes)
 
 
 
