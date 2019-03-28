@@ -3,13 +3,7 @@ from mido.midifiles.units import tempo2bpm, bpm2tempo, tick2second, second2tick
 from midiUtils import Utils, Tone, Note, Chord, Song
 
 
-
-
-
-
-
 util = Utils()
-#note on my keyboard is from note=21 to note=108 == 88 keys
 
 # mid = MidiFile('./aFriendLikeYou/aflu6.mid')
 mid = MidiFile('./aFriendLikeYou/aflu6.mid')
