@@ -41,6 +41,3 @@ Things to do:
 3. Put this in a docker container, make a dockerfile
 4. Make a requirements.txt
 5. Build unit tests(or anything that just tests functionality/integrity)
-6. 
-
-Known Errors -> chord detecting can get messed up to overlapping notes, will fix
