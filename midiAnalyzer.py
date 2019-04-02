@@ -6,8 +6,8 @@ from toneFrequency import ToneFrequency
 
 util = Utils()
 
-# mid = MidiFile('./aFriendLikeYou/aflu6.mid')
 mid = MidiFile('./aFriendLikeYou/aflu6.mid')
+# mid = MidiFile('./whenTheSaintsLeftHandMelody/wtsgmi5.mid')
 print((mid.ticks_per_beat))
 # print(mid.ticks_per_beat, 1000)
 # print(mid.tracks)
@@ -29,7 +29,6 @@ for i, track in enumerate(mid.tracks):
     			absoluteStart, velocityStart = currently_played_notes.pop(message_note)
     			note = Note(absoluteStart, cumulative_time, message_note, velocityStart, msg.velocity)
     			song.add_note(note)
-    			# print(song)
     		else:
     			currently_played_notes[message_note] = (cumulative_time, msg.velocity)
     # print(len(song.tones))
@@ -38,6 +37,7 @@ for i, track in enumerate(mid.tracks):
     	print(tone)
     frequencies = ToneFrequency(song)
     print(frequencies.frequency_of_all_notes)
+    print(frequencies.frequency_of_only_chords)
 
 
 

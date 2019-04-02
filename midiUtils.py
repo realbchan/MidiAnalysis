@@ -1,3 +1,5 @@
+import bisect
+
 class Utils:
 	# initialize, build mapping from a note number to a note letter
 	def __init__(self):
@@ -14,7 +16,9 @@ class Utils:
 			letter = self.pattern[(num_note - 21) % len(self.pattern)]
 			if letter == 'C':
 				octave += 1
-			self.number_to_letter_mappings[num_note] = self.pattern[(num_note - 21) % len(self.pattern)] + str(octave)
+			note = (self.pattern[(num_note - 21) % len(self.pattern)], octave)
+
+			self.number_to_letter_mappings[num_note] = note
 
 	# get method, retrieve note letter from note number
 	def note_number_to_letter(self, num_note):
@@ -49,8 +53,27 @@ class Note(Tone):
 		self.velocityStart = velocityStart
 		self.velocityStop = velocityStop
 
+	# def __key(self):
+	# 	return (self.notePlayed[0], self.notePlayed[1])
+
+	# def __hash__(self):
+	# 	return hash(self.__key())
+
+	def __lt__(self, other_note):
+		note_letter, note_octave = self.notePlayed[0], self.notePlayed[1]
+		other_note_letter, other_note_octave = other_note.notePlayed[0], other_note.notePlayed[1]
+		if note_octave < other_note_octave:
+			return True
+		elif note_octave == other_note_octave:
+			return other_note_letter < note_letter
+		else:
+			return False
+
 	def __str__(self):
-		return self.notePlayed
+		return str(self.notePlayed)
+
+	def __repr__(self):
+		return self.__str__()
 
 	def is_note(self):
 		return True
@@ -68,17 +91,21 @@ class Chord(Tone):
 	# we need to keep track of the average parameters of a chord
 	def __init__(self):
 		super().__init__()
-		self.notes_in_chord = list()
+		self.notes_in_chord = tuple()
 		self.num_chords = 0
 		self.average_duration = 0
 		self.average_start_time = 0
 		self.average_stop_time = 0
 
 	def __str__(self):
-		chord = ''
-		for note in self.notes_in_chord:
-			chord += note.notePlayed
-		return chord
+		return str(self.notes_in_chord)
+
+	# def __key(self):
+	# 	return tuple(note.__hash__() for note in self.notes_in_chord)
+
+	# def __hash__(self):
+	# 	return hash(self.__key())
+
 
 	def is_chord(self):
 		return True
@@ -91,7 +118,18 @@ class Chord(Tone):
 
 		self.num_chords += 1
 
-		self.notes_in_chord.append(note)
+		note_letter, note_octave = note.notePlayed
+
+		list_notes_in_chord = list(self.notes_in_chord)
+		if len(self.notes_in_chord) > 0:
+			bisect.insort_left(list_notes_in_chord, note)
+		else:
+			list_notes_in_chord.append(note)
+		self.notes_in_chord = tuple(list_notes_in_chord)
+		# print(self.notes_in_chord)
+
+
+
 
 	# calculate new arbitrary average
 	def get_new_average(self, previous_cumulation, next_number):
