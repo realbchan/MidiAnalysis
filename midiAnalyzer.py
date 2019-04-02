@@ -6,8 +6,8 @@ from toneFrequency import ToneFrequency
 
 util = Utils()
 
-# mid = MidiFile('./aFriendLikeYou/aflu6.mid')
 mid = MidiFile('./aFriendLikeYou/aflu6.mid')
+# mid = MidiFile('./whenTheSaintsLeftHandMelody/wtsgmi5.mid')
 print((mid.ticks_per_beat))
 # print(mid.ticks_per_beat, 1000)
 # print(mid.tracks)
